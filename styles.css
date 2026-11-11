@@ -1,0 +1,341 @@
+/* styles.css - Mobile-first Astronomical Dark UI */
+:root {
+  --bg-deep: #040711;
+  --bg-panel: #0b1120;
+  --bg-card: rgba(15, 23, 42, 0.85);
+  --border-subtle: rgba(148, 163, 184, 0.18);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-sun: #fbbf24;
+  --accent-moon: #38bdf8;
+  --accent-play: #2563eb;
+  --accent-play-active: #1d4ed8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+  height: 100dvh;
+  margin: 0 auto;
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-subtle);
+  border-right: 1px solid var(--border-subtle);
+}
+
+/* Top Telemetry Bar */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(8, 13, 26, 0.95);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.date-city-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.city-select {
+  background: rgba(30, 41, 59, 0.9);
+  color: #f8fafc;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 6px;
+  padding: 3px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: inherit;
+  max-width: 210px;
+  cursor: pointer;
+  outline: none;
+}
+
+.city-select:focus {
+  border-color: #38bdf8;
+}
+
+.datetime-inline {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.date-main {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #cbd5e1;
+  font-variant-numeric: tabular-nums;
+}
+
+.time-sub {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent-moon);
+  font-variant-numeric: tabular-nums;
+}
+
+.metrics-strip {
+  display: flex;
+  gap: 6px;
+}
+
+.metric-pill {
+  display: flex;
+  flex-direction: column;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(30, 41, 59, 0.65);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.metric-label {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.metric-val {
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.sun-pill .metric-val {
+  color: var(--accent-sun);
+}
+
+.moon-pill .metric-val {
+  color: #e2e8f0;
+}
+
+/* Upper 3D Celestial Sphere Section */
+.sphere-section {
+  position: relative;
+  flex: 1.25;
+  min-height: 0;
+  width: 100%;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+#sphereCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: grab;
+}
+
+#sphereCanvas:active {
+  cursor: grabbing;
+}
+
+.sphere-controls {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+}
+
+.chip-btn {
+  background: rgba(15, 23, 42, 0.78);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+.chip-btn.active {
+  border-color: rgba(251, 191, 36, 0.6);
+  color: #fde047;
+}
+
+/* Lower LA Sky Section (East & West Side-by-Side) */
+.sky-section {
+  position: relative;
+  flex: 0.85;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sky-pane {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  position: relative;
+}
+
+.sky-pane canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.sky-divider {
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(56, 189, 248, 0.45), rgba(251, 191, 36, 0.45));
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.sky-divider span {
+  background: rgba(15, 23, 42, 0.88);
+  color: #93c5fd;
+  font-size: 8px;
+  font-weight: 700;
+  padding: 2px 4px;
+  border-radius: 4px;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  white-space: nowrap;
+}
+
+/* Bottom Control Dock */
+.control-dock {
+  background: rgba(8, 13, 26, 0.98);
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.playback-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.play-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+  border: 1px solid rgba(96, 165, 250, 0.5);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+}
+
+.play-btn.playing {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  border-color: rgba(251, 191, 36, 0.6);
+  box-shadow: 0 2px 10px rgba(217, 119, 6, 0.35);
+}
+
+.speed-group {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+}
+
+.speed-pill {
+  flex: 1;
+  background: rgba(30, 41, 59, 0.75);
+  color: #cbd5e1;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 6px;
+  padding: 6px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.speed-pill.active {
+  background: rgba(37, 99, 235, 0.28);
+  color: #60a5fa;
+  border-color: #3b82f6;
+}
+
+.speed-pill.strobe-pill.active {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+  border-color: #f59e0b;
+}
+
+.sliders-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.slider-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.date-input {
+  background: rgba(30, 41, 59, 0.85);
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+  font-size: 10px;
+  padding: 1px 4px;
+  font-family: inherit;
+}
+
+.slider-val-badge {
+  color: var(--accent-moon);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+input[type='range'] {
+  width: 100%;
+  height: 5px;
+  accent-color: #38bdf8;
+  cursor: pointer;
+}

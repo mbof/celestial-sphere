@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#050811" />
+  <title>Celestial sphere & sky simulator</title>
+  <link rel="stylesheet" href="./styles.css?v=4" />
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Telemetry & City Selector Bar -->
+    <header class="top-bar">
+      <div class="date-city-group">
+        <select id="citySelect" class="city-select" aria-label="Select observer city">
+          <option value="los-angeles">Los Angeles, USA (34.1°N)</option>
+        </select>
+        <div class="datetime-inline">
+          <span class="date-main" id="dateDisplay">2026-03-20</span>
+          <span class="time-sub" id="timeDisplay">09:30 UTC-8</span>
+        </div>
+      </div>
+      <div class="metrics-strip">
+        <div class="metric-pill sun-pill">
+          <span class="metric-label">SUN δ / EoT</span>
+          <span class="metric-val" id="sunMetric">+0.0° • -7.5m</span>
+        </div>
+        <div class="metric-pill moon-pill">
+          <span class="metric-label">MOON PHASE</span>
+          <span class="metric-val" id="moonMetric">Waxing • 50%</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Upper View: 3D Celestial Sphere -->
+    <section class="sphere-section">
+      <canvas id="sphereCanvas"></canvas>
+      <div class="sphere-controls">
+        <button id="camResetBtn" class="chip-btn" title="Reset 3D camera angle">
+          Reset view
+        </button>
+      </div>
+    </section>
+
+    <!-- Lower View: Side-by-Side Local Sky (East & West) -->
+    <section class="sky-section">
+      <div class="sky-pane">
+        <canvas id="skyEastCanvas"></canvas>
+      </div>
+      <div class="sky-divider" title="Due South (180° Azimuth) culmination border">
+        <span>S 180°</span>
+      </div>
+      <div class="sky-pane">
+        <canvas id="skyWestCanvas"></canvas>
+      </div>
+    </section>
+
+    <!-- Bottom Playback & Scrubber Controls -->
+    <footer class="control-dock">
+      <div class="playback-row">
+        <button id="playPauseBtn" class="play-btn" aria-label="Play or pause simulation">
+          <span class="play-icon" id="playIcon">▶</span>
+          <span id="playLabel">Play (1d = 5s)</span>
+        </button>
+
+        <div class="speed-group" role="group" aria-label="Simulation speed">
+          <button type="button" class="speed-pill active" data-mode="continuous" data-speed="1">1d/5s</button>
+          <button type="button" class="speed-pill" data-mode="continuous" data-speed="7">7d/5s</button>
+          <button type="button" class="speed-pill" data-mode="continuous" data-speed="30">30d/5s</button>
+          <button type="button" class="speed-pill strobe-pill" data-mode="strobe" data-speed="30" title="Locks local time of day to trace the yearly analemma without daily spinning">
+            Strobe 1d/step
+          </button>
+        </div>
+      </div>
+
+      <div class="sliders-grid">
+        <div class="slider-row">
+          <label for="daySlider" class="slider-label">
+            <span>Day of year</span>
+            <input type="date" id="datePicker" class="date-input" value="2026-03-20" />
+          </label>
+          <input type="range" id="daySlider" min="0" max="365" step="0.01" value="78" />
+        </div>
+
+        <div class="slider-row">
+          <label for="timeSlider" class="slider-label">
+            <span id="timeSliderLabel">LA local time</span>
+            <span id="timeSliderVal" class="slider-val-badge">09:30</span>
+          </label>
+          <input type="range" id="timeSlider" min="0" max="24" step="0.02" value="9.5" />
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="./app.js?v=4"></script>
+</body>
+</html>
