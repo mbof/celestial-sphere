@@ -2,6 +2,8 @@
 
 Interactive browser simulation of the Sun and Moon on the 3D celestial sphere and in the local sky across the year.
 
+**[Try it now](https://mbof.github.io/celestial-sphere/)**
+
 ## What the application does
 
 The simulator shows how Earth's axial tilt, orbital eccentricity, and daily rotation shape what an observer sees in the sky from over 100 major cities around the world.
